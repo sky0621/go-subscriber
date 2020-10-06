@@ -29,8 +29,23 @@ func main() {
 			return c.String(http.StatusBadRequest, err.Error())
 		}
 		data := string(m.Message.Data)
-		if strings.Contains(data, "add-grade") {
+		if strings.Contains(data, "region") {
+			time.Sleep(5 * time.Second)
+		}
+		if strings.Contains(data, "school") {
+			time.Sleep(5 * time.Second)
+		}
+		if strings.Contains(data, "grade") {
+			time.Sleep(10 * time.Second)
+		}
+		if strings.Contains(data, "class") {
+			time.Sleep(5 * time.Second)
+		}
+		if strings.Contains(data, "teacher") {
 			time.Sleep(3 * time.Second)
+		}
+		if strings.Contains(data, "student") {
+			time.Sleep(10 * time.Second)
 		}
 		log.Printf("Message[ID:%s][Data:%s]", m.Message.ID, data)
 		return c.String(http.StatusOK, "OK")
