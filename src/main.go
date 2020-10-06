@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/labstack/echo/v4"
@@ -17,8 +18,6 @@ func main() {
 	e.Use(middleware.Recover())
 
 	e.POST("/", func(c echo.Context) error {
-		time.Sleep(3 * time.Second)
-
 		var m PubSubMessage
 		body, err := ioutil.ReadAll(c.Request().Body)
 		if err != nil {
@@ -29,7 +28,11 @@ func main() {
 			log.Printf("json.Unmarshal: %v", err)
 			return c.String(http.StatusBadRequest, err.Error())
 		}
-		log.Printf("Message[ID:%s][Data:%s]", m.Message.ID, string(m.Message.Data))
+		data := string(m.Message.Data)
+		if strings.Contains(data, "add-grade") {
+			time.Sleep(3 * time.Second)
+		}
+		log.Printf("Message[ID:%s][Data:%s]", m.Message.ID, data)
 		return c.String(http.StatusOK, "OK")
 	})
 
