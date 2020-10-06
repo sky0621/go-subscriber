@@ -15,7 +15,5 @@ gcloud run deploy go-subscriber \
   --platform managed \
   --project "${project}" \
   --region asia-northeast1 \
-  --allow-unauthenticated
-
-# MEMO: use all user access
-#  --allow-unauthenticated \
+  --allow-unauthenticated \
+  --set-env-vars PUB_PROJECT="${project}"
